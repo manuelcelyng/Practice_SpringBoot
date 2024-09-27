@@ -1,45 +1,46 @@
 package com.celyng.example;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 
 @Service
+@PropertySources(
+        {
+                @PropertySource("classpath:custom.properties"),
+                @PropertySource("classpath:custom-2-file.properties")
+        }
+)
 public class MyFirstService {
 
+    @Value("${my.prop}")
+    private String customPropertyFromAnotherFile;
 
-    private MyFirstClass myFirstClass;
+    @Value("${my.prop2}")
+    private String customPropertyFromAnotherFile2;
 
-    private Environment environment;
+    private final MyFirstClass myFirstClass;
 
-    @Autowired
-    public void setMyFirstBean( @Qualifier("myFirstBean")MyFirstClass myFirstClass) {
+    public MyFirstService(
+            @Qualifier("myFirstBean") MyFirstClass myFirstClass) {
         this.myFirstClass = myFirstClass;
     }
+
 
     public String tellAStory(){
         return "The dependency is saying : " + myFirstClass.sayHello();
     }
 
-    public String getJavaVersion(){
-        return environment.getProperty("java.version");
+
+    public String getCustomPropertyFromAnotherFile() {
+        return customPropertyFromAnotherFile;
     }
 
-    public String getOsName(){
-        return environment.getProperty("os.name");
+    public String getCustomPropertyFromAnotherFile2() {
+        return customPropertyFromAnotherFile2;
     }
-
-    public String readProperty(){
-        return environment.getProperty("my.custom.property");
-    }
-
-    @Autowired
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
-
-
 }
