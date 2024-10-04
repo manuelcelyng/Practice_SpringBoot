@@ -1,15 +1,13 @@
 package com.celyng.example;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name= "T_STUDENT")
+@Table
 public class Student {
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(
