@@ -42,7 +42,13 @@ public class FirstController {
     }
 
 
-
+    @DeleteMapping("/students/{student-id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteStudentById(
+            @PathVariable("student-id") Integer studentId
+    ){
+        repository.deleteById(studentId);
+    }
 
 
 
