@@ -1,5 +1,6 @@
 package com.celyng.example;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,12 +37,10 @@ public class Student {
     @JoinColumn(
             name = "school_id"
     )
+    @JsonBackReference
     private School school;
 
-    @Column(
-            updatable = false
-    )
-    public String some_column;
+
 
     public Student() {
     }

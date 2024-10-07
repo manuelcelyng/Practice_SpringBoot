@@ -6,20 +6,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class FirstController {
+public class StudentController {
 
     private final StudentRepository repository;
 
-    public FirstController(StudentRepository repository) {
+    public StudentController(StudentRepository repository) {
         this.repository = repository;
     }
 
 
     @PostMapping("/students")
     public Student post(
-            @RequestBody Student student
+            @RequestBody StudentDto dto
     ){
+        var student = toStudent(dto);
         return repository.save(student);
+    }
+
+    private Student toStudent(StudentDto studentDto) {
+        var student = new Student();
+        student.setFirstName(studentDto.firstName());
+        student.setLastName(studentDto.lastName());
+        student.setEmail(studentDto.email());
+
+        var school =  new School();
+        school.setId(studentDto.schoolId());
+
+        student.setSchool(school);
+        return student;
     }
 
     @GetMapping("/students/all")
