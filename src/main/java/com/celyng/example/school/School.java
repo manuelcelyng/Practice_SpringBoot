@@ -1,5 +1,6 @@
-package com.celyng.example;
+package com.celyng.example.school;
 
+import com.celyng.example.student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 

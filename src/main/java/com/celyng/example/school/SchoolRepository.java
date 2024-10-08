@@ -1,4 +1,4 @@
-package com.celyng.example;
+package com.celyng.example.school;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

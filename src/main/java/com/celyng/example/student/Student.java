@@ -1,8 +1,9 @@
-package com.celyng.example;
+package com.celyng.example.student;
 
+import com.celyng.example.school.School;
+import com.celyng.example.studentprofile.StudentProfile;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table

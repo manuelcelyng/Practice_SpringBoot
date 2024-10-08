@@ -1,5 +1,6 @@
-package com.celyng.example;
+package com.celyng.example.studentprofile;
 
+import com.celyng.example.student.Student;
 import jakarta.persistence.*;
 
 @Entity

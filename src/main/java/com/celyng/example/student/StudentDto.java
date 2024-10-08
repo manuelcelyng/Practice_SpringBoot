@@ -1,4 +1,4 @@
-package com.celyng.example;
+package com.celyng.example.student;
 
 public record StudentDto(
         String firstName,
