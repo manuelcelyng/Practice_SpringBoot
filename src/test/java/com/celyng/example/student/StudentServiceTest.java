@@ -8,10 +8,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class StudentServiceTest {
@@ -108,7 +108,7 @@ class StudentServiceTest {
         studentResponseDtoList.add(studentResponseDto);
 
         //MockTheCalls
-        when(studentMapper.toStudentResponseDto(student)).thenReturn(studentResponseDto);
+        when(studentMapper.toStudentResponseDto(any(Student.class))).thenReturn(studentResponseDto);
         when(studentRepository.findAllByFirstNameContaining("Manuel")).thenReturn(studentsList);
 
         //When
@@ -117,5 +117,42 @@ class StudentServiceTest {
 
         //Then
         assertArrayEquals(responseDtoList.toArray(), studentResponseDtoList.toArray());
+        verify(studentRepository,times(1)).findAllByFirstNameContaining("Manuel");
+    }
+
+
+
+    @Test
+    public void should_get_student_by_id(){
+        //Given
+        Integer studentId = 1;
+        Student student = new Student();
+        student.setId(studentId);
+        student.setFirstName("Manuel");
+        student.setLastName("Cely");
+        student.setEmail("manuel@gmail.com");
+
+        StudentResponseDto studentResponseDto = new StudentResponseDto(
+                "Manuel",
+                "Cely",
+                "manuel@gmail.com"
+        );
+
+
+
+        //MockTheCalls
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        when(studentMapper.toStudentResponseDto(any(Student.class))).thenReturn(studentResponseDto);
+
+        //When
+
+        StudentResponseDto dto = studentService.getStudentById(studentId);
+
+        //Then
+        assertEquals(dto.firstName(), student.getFirstName());
+        assertEquals(dto.lastName(), student.getLastName());
+        assertEquals(dto.email(), student.getEmail());
+
+        verify(studentRepository,times(1)).findById(studentId);
     }
 }
