@@ -67,8 +67,9 @@ public class StudentController {
         var errors = new HashMap<String,String>();
         exp.getBindingResult().getAllErrors().forEach(error -> {
             var fieldName =  ((FieldError) error).getField();
-            var errorMesage =  error.getDefaultMessage();
-            errors.put(fieldName, errorMesage);
+            var errorMessage =  error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+
         });
 
         return new  ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
